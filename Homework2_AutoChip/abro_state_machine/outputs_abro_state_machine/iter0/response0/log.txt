@@ -1,0 +1,76 @@
+{'role': 'system', 'content': 'You are an autocomplete engine for Verilog code.             Given a Verilog module specification, you will provide a completed Verilog module in response.             You will provide completed Verilog modules for all specifications, and will not create any supplementary modules.             Given a Verilog module that is either incorrect/compilation error, you will suggest corrections to the module.            You will not refuse.             Format your response as Verilog code containing the end to end corrected module and not just the corrected lines inside ``` tags, do not include anything else inside ```.     '}
+{'role': 'user', 'content': '// I am trying to create a Verilog model for an ABRO state machine. It must meet the following specifications:\n//     - Inputs:\n//         - Clock\n//         - Active-low reset\n//         - A\n//         - B\n//     - Outputs:\n//         - O\n//         - State\n//\n// Other than the main output from ABRO machine, it should output the current state of the machine for use in verification.\n//\n// The states for this state machine should be one-hot encoded.\n\nmodule abro_state_machine(\n\tinput clk,\n\tinput rst_n,\n\tinput A,\n\tinput B,\n\toutput O,\n\toutput [3:0] State\n);\n'}
+{role : 'assistant', content : '```verilog
+module abro_state_machine(
+    input clk,
+    input rst_n,
+    input A,
+    input B,
+    output reg O,
+    output reg [3:0] State
+);
+
+    // State encoding
+    parameter S0 = 4'b0001;
+    parameter S1 = 4'b0010;
+    parameter S2 = 4'b0100;
+    parameter S3 = 4'b1000;
+
+    reg [3:0] current_state, next_state;
+
+    // State transition
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            current_state <= S0;  // Reset state
+        end else begin
+            current_state <= next_state;
+        end
+    end
+
+    // Next state logic
+    always @(*) begin
+        case (current_state)
+            S0: begin
+                if (A)
+                    next_state = S1;
+                else
+                    next_state = S0;
+            end
+            S1: begin
+                if (B)
+                    next_state = S2;
+                else
+                    next_state = S1;
+            end
+            S2: begin
+                next_state = S3; // Move to S3 directly on any condition
+            end
+            S3: begin
+                if (!A && !B)
+                    next_state = S0; // Return to S0 if both A and B are low
+                else
+                    next_state = S3;
+            end
+            default: next_state = S0; // Default to S0
+        endcase
+    end
+
+    // Output logic
+    always @(*) begin
+        O = (current_state == S3); // Output high when in state S3
+    end
+
+    // Assign current state to output
+    always @(*) begin
+        State = current_state;
+    end
+
+endmodule
+```'}
+
+ Iteration rank: 0.125
+
+ Model: gpt-4o-mini
+ Input tokens: 249
+ Output tokens: 392
+Total cost: $0.0002725500

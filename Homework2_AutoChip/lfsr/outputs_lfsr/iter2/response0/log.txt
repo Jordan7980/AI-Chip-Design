@@ -1,0 +1,31 @@
+{'role': 'system', 'content': 'You are an autocomplete engine for Verilog code.             Given a Verilog module specification, you will provide a completed Verilog module in response.             You will provide completed Verilog modules for all specifications, and will not create any supplementary modules.             Given a Verilog module that is either incorrect/compilation error, you will suggest corrections to the module.            You will not refuse.             Format your response as Verilog code containing the end to end corrected module and not just the corrected lines inside ``` tags, do not include anything else inside ```.     '}
+{'role': 'user', 'content': '// I am trying to create a Verilog model for an LFSR. It must meet the following specifications:\n//     - Inputs:\n//         - Clock\n//         - Active-low reset\n//     - Outputs:\n//         - Data (8-bits)\n//\n// The initial state should be 10001010, and the taps should be at locations 1, 4, 6, and 7.\n\nmodule lfsr(\n\tinput clk,\n\tinput reset_n,\n\toutput [7:0] data\n);\n'}
+{'role': 'assistant', 'content': "module lfsr(\n    input clk,\n    input reset_n,\n    output reg [7:0] data\n);\n\n    reg [7:0] lfsr_reg;\n\n    always @(posedge clk or negedge reset_n) begin\n        if (!reset_n) begin\n            lfsr_reg <= 8'b10001010; // Initial state\n        end else begin\n            // Correct feedback polynomial for taps at locations 1, 4, 6, and 7\n            lfsr_reg <= {lfsr_reg[6:0], lfsr_reg[7] ^ lfsr_reg[3] ^ lfsr_reg[1] ^ lfsr_reg[0]};\n        end\n    end\n\n    assign data = lfsr_reg;\n\nendmodule\n\n"}
+{'role': 'user', 'content': 'The testbench simulated, but had errors. Please fix the module. The output of iverilog is as follows:\nError: At time                55000, data = 01011101, expected = 01011100\nError: At time                65000, data = 10111010, expected = 10111000\nError: At time                75000, data = 01110101, expected = 01110000\nError: At time                85000, data = 11101011, expected = 11100000\nError: At time                95000, data = 11010110, expected = 11000000\nError: At time               105000, data = 10101100, expected = 10000001\nError: At time               115000, data = 01011000, expected = 00000011\nError: At time               125000, data = 10110001, expected = 00000111\nError: At time               135000, data = 01100010, expected = 00001111\nError: At time               145000, data = 11000101, expected = 00011110\n./lfsr_tb.sv:62: $finish called at 2565000 (1ps)\nMismatches: 252 in 257 samples\n'}
+{role : 'assistant', content : 'module lfsr(
+    input clk,
+    input reset_n,
+    output reg [7:0] data
+);
+
+    reg [7:0] lfsr_reg;
+
+    always @(posedge clk or negedge reset_n) begin
+        if (!reset_n) begin
+            lfsr_reg <= 8'b10001010; // Initial state
+        end else begin
+            // Correct feedback polynomial for taps at locations 1, 4, 6, and 7
+            lfsr_reg <= {lfsr_reg[6:0], lfsr_reg[7] ^ lfsr_reg[3] ^ lfsr_reg[5] ^ lfsr_reg[6]};
+        end
+    end
+
+    assign data = lfsr_reg;
+
+endmodule'}
+
+ Iteration rank: 0.0038910505836575876
+
+ Model: gpt-4o-mini
+ Input tokens: 506
+ Output tokens: 336
+Total cost: $0.0002775000

@@ -1,0 +1,83 @@
+{'role': 'system', 'content': 'You are an autocomplete engine for Verilog code.             Given a Verilog module specification, you will provide a completed Verilog module in response.             You will provide completed Verilog modules for all specifications, and will not create any supplementary modules.             Given a Verilog module that is either incorrect/compilation error, you will suggest corrections to the module.            You will not refuse.             Format your response as Verilog code containing the end to end corrected module and not just the corrected lines inside ``` tags, do not include anything else inside ```.     '}
+{'role': 'user', 'content': '// I am trying to create a Verilog model for an ABRO state machine. It must meet the following specifications:\n//     - Inputs:\n//         - Clock\n//         - Active-low reset\n//         - A\n//         - B\n//     - Outputs:\n//         - O\n//         - State\n//\n// Other than the main output from ABRO machine, it should output the current state of the machine for use in verification.\n//\n// The states for this state machine should be one-hot encoded.\n\nmodule abro_state_machine(\n\tinput clk,\n\tinput rst_n,\n\tinput A,\n\tinput B,\n\toutput O,\n\toutput [3:0] State\n);\n'}
+{role : 'assistant', content : '```verilog
+module abro_state_machine(
+    input clk,
+    input rst_n,
+    input A,
+    input B,
+    output reg O,
+    output reg [3:0] State
+);
+
+    // State encoding
+    localparam IDLE = 4'b0001;
+    localparam STATE_A = 4'b0010;
+    localparam STATE_B = 4'b0100;
+    localparam STATE_AB = 4'b1000;
+
+    // State register
+    reg [3:0] current_state, next_state;
+
+    // Sequential logic for state transitions
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n)
+            current_state <= IDLE; // Reset to IDLE state
+        else
+            current_state <= next_state; // Update state
+    end
+
+    // Combinational logic for determining next state and output
+    always @(*) begin
+        // Default values
+        next_state = current_state;
+        O = 0; // Default output
+
+        case (current_state)
+            IDLE: begin
+                if (A && !B)
+                    next_state = STATE_A;
+                else if (!A && B)
+                    next_state = STATE_B;
+            end
+            
+            STATE_A: begin
+                O = 1; // Output logic for STATE_A
+                if (B)
+                    next_state = STATE_AB; // Transition to STATE_AB
+                else if (!A)
+                    next_state = IDLE; // Transition back to IDLE
+            end
+            
+            STATE_B: begin
+                O = 1; // Output logic for STATE_B
+                if (A)
+                    next_state = STATE_AB; // Transition to STATE_AB
+                else if (!B)
+                    next_state = IDLE; // Transition back to IDLE
+            end
+            
+            STATE_AB: begin
+                O = 1; // Output logic for STATE_AB
+                if (!A && !B)
+                    next_state = IDLE; // Transition back to IDLE
+            end
+            
+            default: next_state = IDLE; // Fallback case
+        endcase
+    end
+
+    // Output the current state for verification
+    always @(*) begin
+        State = current_state; // Output the current state
+    end
+
+endmodule
+```'}
+
+ Iteration rank: 0.125
+
+ Model: gpt-4o-mini
+ Input tokens: 249
+ Output tokens: 473
+Total cost: $0.0003211500

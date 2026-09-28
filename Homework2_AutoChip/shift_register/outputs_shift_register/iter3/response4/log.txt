@@ -1,0 +1,28 @@
+{'role': 'system', 'content': 'You are an autocomplete engine for Verilog code.             Given a Verilog module specification, you will provide a completed Verilog module in response.             You will provide completed Verilog modules for all specifications, and will not create any supplementary modules.             Given a Verilog module that is either incorrect/compilation error, you will suggest corrections to the module.            You will not refuse.             Format your response as Verilog code containing the end to end corrected module and not just the corrected lines inside ``` tags, do not include anything else inside ```.     '}
+{'role': 'user', 'content': '// I am trying to create a Verilog model for a shift register. It must meet the following specifications:\n//     - Inputs:\n//         - Clock\n//         - Active-low reset\n//         - Data (1 bit)\n//         - Shift enable\n//     - Outputs:\n//         - Data (8 bits)\n\nmodule shift_register(\n\tinput clk,\n\tinput reset_n,\n\tinput data_in,\n\tinput shift_enable,\n\toutput [7:0] data_out\n);\n'}
+{'role': 'assistant', 'content': "module shift_register(\n\tinput clk,\n\tinput reset_n,\n\tinput data_in,\n\tinput shift_enable,\n\toutput reg [7:0] data_out\n);\n\n\talways @(posedge clk or negedge reset_n) begin\n\t\tif (!reset_n) begin\n\t\t\tdata_out <= 8'b0; // Reset the output to 0 on active-low reset\n\t\tend else if (shift_enable) begin\n\t\t\tdata_out <= {data_out[6:0], data_in}; // Shift left and insert data_in\n\t\tend\n\tend\n\nendmodule\n\n"}
+{'role': 'user', 'content': 'The testbench simulated, but had errors. Please fix the module. The output of iverilog is as follows:\nError: Test case 1 failed (reset_n=1, data_in=1, shift_enable=1). Expected: 10000000, Got: 00000001\nError: Test case 2 failed (reset_n=1, data_in=0, shift_enable=1). Expected: 01000000, Got: 00000010\nError: Test case 3 failed (reset_n=1, data_in=1, shift_enable=1). Expected: 10100000, Got: 00000101\nError: Test case 4 failed (reset_n=1, data_in=0, shift_enable=1). Expected: 01010000, Got: 00001010\nError: Test case 5 failed (reset_n=1, data_in=0, shift_enable=1). Expected: 00101000, Got: 00010100\nError: Test case 7 failed (reset_n=1, data_in=1, shift_enable=1). Expected: 10000000, Got: 00000001\n./shift_register_tb.sv:57: $finish called at 90000 (1ps)\nMismatches: 6 in 8 samples\n'}
+{role : 'assistant', content : 'module shift_register(
+	input clk,
+	input reset_n,
+	input data_in,
+	input shift_enable,
+	output reg [7:0] data_out
+);
+
+	always @(posedge clk or negedge reset_n) begin
+		if (!reset_n) begin
+			data_out <= 8'b0; // Reset the output to 0 on active-low reset
+		end else if (shift_enable) begin
+			data_out <= {data_out[6:0], data_in}; // Shift left and insert data_in
+		end
+	end
+
+endmodule'}
+
+ Iteration rank: 0.25
+
+ Model: gpt-4o-mini
+ Input tokens: 484
+ Output tokens: 228
+Total cost: $0.0002094000

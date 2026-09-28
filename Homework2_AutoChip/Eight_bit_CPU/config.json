@@ -1,0 +1,14 @@
+{
+	"general": {
+		"prompt": "./Eight_bit_CPU.sv",
+		"name": "Eight_bit_CPU",
+		"testbench": "./Eight_bit_CPU_tb.sv",
+		"model_family": "ChatGPT",
+		"model_id": "gpt-4o-mini",
+		"num_candidates": 5,
+		"iterations": 10,
+		"outdir": "outputs_Eight_bit_CPU",
+		"log": "log.txt",
+		"ensemble": false
+	}
+}
