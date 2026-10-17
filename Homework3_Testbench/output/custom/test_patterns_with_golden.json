@@ -1,0 +1,198 @@
+[
+  {
+    "req": 0,
+    "expected_outputs": {
+      "idx": 0,
+      "valid": 0
+    }
+  },
+  {
+    "req": 255,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 1,
+    "expected_outputs": {
+      "idx": 0,
+      "valid": 1
+    }
+  },
+  {
+    "req": 2,
+    "expected_outputs": {
+      "idx": 1,
+      "valid": 1
+    }
+  },
+  {
+    "req": 4,
+    "expected_outputs": {
+      "idx": 2,
+      "valid": 1
+    }
+  },
+  {
+    "req": 8,
+    "expected_outputs": {
+      "idx": 3,
+      "valid": 1
+    }
+  },
+  {
+    "req": 16,
+    "expected_outputs": {
+      "idx": 4,
+      "valid": 1
+    }
+  },
+  {
+    "req": 32,
+    "expected_outputs": {
+      "idx": 5,
+      "valid": 1
+    }
+  },
+  {
+    "req": 64,
+    "expected_outputs": {
+      "idx": 6,
+      "valid": 1
+    }
+  },
+  {
+    "req": 128,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 3,
+    "expected_outputs": {
+      "idx": 1,
+      "valid": 1
+    }
+  },
+  {
+    "req": 5,
+    "expected_outputs": {
+      "idx": 2,
+      "valid": 1
+    }
+  },
+  {
+    "req": 9,
+    "expected_outputs": {
+      "idx": 3,
+      "valid": 1
+    }
+  },
+  {
+    "req": 17,
+    "expected_outputs": {
+      "idx": 4,
+      "valid": 1
+    }
+  },
+  {
+    "req": 33,
+    "expected_outputs": {
+      "idx": 5,
+      "valid": 1
+    }
+  },
+  {
+    "req": 65,
+    "expected_outputs": {
+      "idx": 6,
+      "valid": 1
+    }
+  },
+  {
+    "req": 129,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 1,
+    "expected_outputs": {
+      "idx": 0,
+      "valid": 1
+    }
+  },
+  {
+    "req": 213,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 170,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 224,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 60,
+    "expected_outputs": {
+      "idx": 5,
+      "valid": 1
+    }
+  },
+  {
+    "req": 252,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 126,
+    "expected_outputs": {
+      "idx": 6,
+      "valid": 1
+    }
+  },
+  {
+    "req": 239,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 31,
+    "expected_outputs": {
+      "idx": 4,
+      "valid": 1
+    }
+  },
+  {
+    "req": 179,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  },
+  {
+    "req": 219,
+    "expected_outputs": {
+      "idx": 7,
+      "valid": 1
+    }
+  }
+]
